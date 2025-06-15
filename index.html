@@ -10,13 +10,36 @@
         font-family: sans-serif;
         background-color: #d9534f;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column; /* Stack header, main, footer */
         min-height: 100vh;
         margin: 0;
         color: white;
         transition: background-color 0.3s ease, color: 0.3s ease;
         overflow: hidden; /* Prevent scrollbars caused by the progress bar */
+    }
+
+    header, footer {
+        height: 60px; /* Example height */
+        background-color: #333; /* Darker background for contrast */
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        flex-shrink: 0; /* Prevent shrinking */
+        z-index: 6; /* Ensure they are above the progress bar if it's full screen */
+    }
+
+    footer {
+        height: 40px; /* Example height for footer */
+    }
+
+    main {
+        flex-grow: 1; /* Allows main to take up available space */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centers .timer-app-container vertically */
+        align-items: center;   /* Centers .timer-app-container horizontally */
     }
 
     .timer-app-container {
@@ -305,85 +328,33 @@
     </style>
 </head>
 <body>
-    <div class="timer-app-container">
-        <div class="top-buttons">
-            <button id="pomodoro-mode" class="active">Pomodoro</button>
-            <button id="short-break-mode">Short Break</button>
-            <button id="long-break-mode">Long Break</button>
-        </div>
-
-        <div class="timer-container">
-            <div class="timer">25:00</div>
-        </div>
-
-        <div class="bottom-controls">
-            <button id="skipToShortBreak" title="Skip to Short Break"><i class="fas fa-fast-forward"></i></button>
-            <div class="start-button-wrapper">
-                <button id="startPause"><i class="fas fa-play"></i> Start</button>
+    <header>
+        <h1>Pomodoro Timer</h1>
+    </header>
+    <main>
+        <div class="timer-app-container">
+            <div class="top-buttons">
+                <button id="pomodoro-mode" class="active">Pomodoro</button>
+                <button id="short-break-mode">Short Break</button>
+                <button id="long-break-mode">Long Break</button>
             </div>
-            <button id="skip" title="Skip"><i class="fas fa-forward"></i></button>
-        </div>
-    </div>
 
-      <div class="timer-app-container">
-        <div class="top-buttons">
-            <button id="pomodoro-mode" class="active">Pomodoro</button>
-            <button id="short-break-mode">Short Break</button>
-            <button id="long-break-mode">Long Break</button>
-        </div>
-
-        <div class="timer-container">
-            <div class="timer">25:00</div>
-        </div>
-
-        <div class="bottom-controls">
-            <button id="skipToShortBreak" title="Skip to Short Break"><i class="fas fa-fast-forward"></i></button>
-            <div class="start-button-wrapper">
-                <button id="startPause"><i class="fas fa-play"></i> Start</button>
+            <div class="timer-container">
+                <div class="timer">25:00</div>
             </div>
-            <button id="skip" title="Skip"><i class="fas fa-forward"></i></button>
-        </div>
-    </div>
 
-      <div class="timer-app-container">
-        <div class="top-buttons">
-            <button id="pomodoro-mode" class="active">Pomodoro</button>
-            <button id="short-break-mode">Short Break</button>
-            <button id="long-break-mode">Long Break</button>
-        </div>
-
-        <div class="timer-container">
-            <div class="timer">25:00</div>
-        </div>
-
-        <div class="bottom-controls">
-            <button id="skipToShortBreak" title="Skip to Short Break"><i class="fas fa-fast-forward"></i></button>
-            <div class="start-button-wrapper">
-                <button id="startPause"><i class="fas fa-play"></i> Start</button>
+            <div class="bottom-controls">
+                <button id="skipToShortBreak" title="Skip to Short Break"><i class="fas fa-fast-forward"></i></button>
+                <div class="start-button-wrapper">
+                    <button id="startPause"><i class="fas fa-play"></i> Start</button>
+                </div>
+                <button id="skip" title="Skip"><i class="fas fa-forward"></i></button>
             </div>
-            <button id="skip" title="Skip"><i class="fas fa-forward"></i></button>
         </div>
-    </div>
-
-      <div class="timer-app-container">
-        <div class="top-buttons">
-            <button id="pomodoro-mode" class="active">Pomodoro</button>
-            <button id="short-break-mode">Short Break</button>
-            <button id="long-break-mode">Long Break</button>
-        </div>
-
-        <div class="timer-container">
-            <div class="timer">25:00</div>
-        </div>
-
-        <div class="bottom-controls">
-            <button id="skipToShortBreak" title="Skip to Short Break"><i class="fas fa-fast-forward"></i></button>
-            <div class="start-button-wrapper">
-                <button id="startPause"><i class="fas fa-play"></i> Start</button>
-            </div>
-            <button id="skip" title="Skip"><i class="fas fa-forward"></i></button>
-        </div>
-    </div>
+    </main>
+    <footer>
+        <p>&copy; Your Name/Company <span id="currentYear"></span></p>
+    </footer>
 
     <!-- Progress Bar -->
     <div class="progress-bar">
@@ -464,6 +435,10 @@
         const body = document.body;
         const topButtons = document.querySelectorAll('.top-buttons button');
         const timerSoundSelect = document.getElementById('timerSound');
+        const currentYearSpan = document.getElementById('currentYear');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
         const previewSoundIcon = document.querySelector('.preview-sound-icon');
 
         // Progress Bar Elements
