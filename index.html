@@ -9,29 +9,13 @@
     <style>body {
         font-family: sans-serif;
         background-color: #d9534f;
-        display: flex;
-        flex-direction: column; /* Stack header, main, footer */
+        display: flex; /* Changed to flex-direction: column below */
+        flex-direction: column; /* Stack main content and footer */
         min-height: 100vh;
         margin: 0;
         color: white;
         transition: background-color 0.3s ease, color: 0.3s ease;
-        overflow: hidden; /* Prevent scrollbars caused by the progress bar */
-    }
-
-    header, footer {
-        height: 60px; /* Example height */
-        background-color: #333; /* Darker background for contrast */
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 20px;
-        flex-shrink: 0; /* Prevent shrinking */
-        z-index: 6; /* Ensure they are above the progress bar if it's full screen */
-    }
-
-    footer {
-        height: 40px; /* Example height for footer */
+        overflow: auto; /* Allow scrollbars if content overflows */
     }
 
     main {
@@ -40,6 +24,7 @@
         flex-direction: column;
         justify-content: center; /* Centers .timer-app-container vertically */
         align-items: center;   /* Centers .timer-app-container horizontally */
+        width: 100%; /* Ensure main takes full width */
     }
 
     .timer-app-container {
@@ -47,6 +32,18 @@
         flex-direction: column;
         align-items: center;
         position: relative;
+        /* Removed margin-top from here as main container will center it */
+    }
+
+    footer {
+        height: 40px; /* Example height */
+        background-color: #333; /* Darker background for contrast */
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        flex-shrink: 0; /* Prevent shrinking */
     }
 
     .top-buttons {
@@ -325,12 +322,25 @@
         width: 4px;
         height: 0;
     }
+
+    .custom-card {
+        height: 256px;
+        background-color: #f8f9fa; /* Light grey background */
+        color: #212529; /* Dark text color */
+        border: 1px solid #dee2e6; /* Light border */
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 30px; /* Space from the timer container */
+        width: 80%; /* Adjust width as needed */
+        max-width: 600px; /* Optional: max-width for larger screens */
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Pomodoro Timer</h1>
-    </header>
     <main>
         <div class="timer-app-container">
             <div class="top-buttons">
@@ -351,10 +361,28 @@
                 <button id="skip" title="Skip"><i class="fas fa-forward"></i></button>
             </div>
         </div>
+        <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>
+           <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>   <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>   <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>   <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>
+           <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>   <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>   <div class="custom-card">
+            <p>This is a new card, 256px high.</p>
+        </div>
     </main>
-    <footer>
-        <p>&copy; Your Name/Company <span id="currentYear"></span></p>
-    </footer>
+
+    
 
     <!-- Progress Bar -->
     <div class="progress-bar">
@@ -414,6 +442,11 @@
         <button id="resetDefaults">Reset Defaults</button>
     </div>
 
+    <footer>
+        <p>&copy; Your Pomodoro App <span id="currentYear"></span></p>
+    </footer>
+
+
     <script>
         const timerDisplay = document.querySelector('.timer');
         const startPauseBtn = document.getElementById('startPause');
@@ -435,11 +468,8 @@
         const body = document.body;
         const topButtons = document.querySelectorAll('.top-buttons button');
         const timerSoundSelect = document.getElementById('timerSound');
-        const currentYearSpan = document.getElementById('currentYear');
-        if (currentYearSpan) {
-            currentYearSpan.textContent = new Date().getFullYear();
-        }
         const previewSoundIcon = document.querySelector('.preview-sound-icon');
+        const currentYearSpan = document.getElementById('currentYear');
 
         // Progress Bar Elements
         const progressBar = document.querySelector('.progress-bar');
@@ -822,6 +852,10 @@
         loadSettings();
         setTimeForMode(currentMode);
         applyTopButtonStyles();
+
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
     </script>
 </body>
 </html>
